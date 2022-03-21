@@ -1,0 +1,4 @@
+@echo off
+set /p client=Digite o nome do cliente:
+aws aws s3 sync C:\AWS\ s3://treinamento.bkp/%client%/ > C:\AWS\log1.txt
+pause>nul

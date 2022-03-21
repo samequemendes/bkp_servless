@@ -1,0 +1,57 @@
+treinamento bkp
+
+etapas:
+
+1- Criar um bucket para armazenar os dados
+2 - Criar as 2 politicas de acesso:
+	1- para os usuário de sincronismo >>sync-police-deviceless
+	2- para os usuário de gerenciamento>> adm-police-deviceless
+3 - Criar os 2 usuários de acesso ao bucket e inserí-los em suas politicas
+	1- user de sincronismo sync-nome_cliente
+	2- user de gerenciamentos adm-nome_cliente
+4 - Salvar dados do usário na raiz do bucket: treinamento.bpk/secret-keys
+5 - Instalar CLI no cliente e autenticar com user sync
+6 - Criar script de sincronização anexar ao agendador de tarefas do windows 
+7 - testar exec script e sync
+
+
+
+***MODELO DE SCRIPT BASICO***
+
+c:// aws s3 sync (caminho do arquivo) s3://(bucket_name)
+aws s3 sync C:\AWS\PROJETOS\site-estatico\upload s3://site.samequemendes
+
+aws s3 sync c:/aws s3://treinamento.bkp
+
+
+--delete (remove arquivos que foram deletados da pagina original)
+--exclude (excessoes a serem excluídas)
+--recursive (utilizado para incluir subpastas da pasta principal)
+
+
+
+
+***Script top***
+atividades: 
+1 - levantar itensi a serem sincronizados
+2 - levantar itens a serem excluídos
+3 - envia resultado por e-mail
+4 - insere na tabela dinamo total de dados copiados
+
+
+$origem = "c:\dados"
+$destino = "s3://empresa.cliente1"
+$mailOrigem = "leandro@cloudtreinamentos.com"
+$mailDestino = "le.porciuncula.rodrigues@gmail.com"
+
+aws.exe s3 sync $origem $destino > C:\device-less\log.txt
+date >> C:\device-less\log.txt
+$mail = Get-Content -Path C:\device-less\log.txt
+aws ses send-email --from $mailOrigem --to $mailDestino --subject "Backup Dados" --text "$mail"
+
+OBS. Verificar estratégia "incluir apenas"
+soma dos comandos --exclude "*"  --include"*.extesao"
+
+**********************************************
+
+*

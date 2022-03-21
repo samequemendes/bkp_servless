@@ -1,0 +1,6 @@
+echo off
+echo script sincroniza arquivos da pasta c:/aws para o bucket utilizado para bkp.
+echo imprime resultado de sincronização em log.txt
+echo  este bucket foi configurado com versionamento
+echo aws s3 sync C:\AWS\ s3://treinamento.bkp > C:\AWS\log.txt
+pause
