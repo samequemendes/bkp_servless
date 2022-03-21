@@ -32,25 +32,29 @@ aws s3 sync c:/aws s3://treinamento.bkp
 
 
 ***Script top***
+
 atividades: 
-1 - levantar itensi a serem sincronizados
-2 - levantar itens a serem excluídos
-3 - envia resultado por e-mail
-4 - insere na tabela dinamo total de dados copiados
+
+1 - alterar variaveis $origem - $destino - $mailOrigem - $mailDestino
+2 - salvar arquivo *.ps1
+3 - Configurar agendador do windows para executar script
+
+ATENÇÂO - verifique a necessidade de exclusão de arquivos e backup incremental 
 
 
+#################################################################################################
 $origem = "c:\dados"
 $destino = "s3://empresa.cliente1"
-$mailOrigem = "leandro@cloudtreinamentos.com"
-$mailDestino = "le.porciuncula.rodrigues@gmail.com"
+$mailOrigem = "formulario@samequemendes.cf"
+$mailDestino = "cliete@quevaireceber.com.br"
 
 aws.exe s3 sync $origem $destino > C:\device-less\log.txt
 date >> C:\device-less\log.txt
 $mail = Get-Content -Path C:\device-less\log.txt
 aws ses send-email --from $mailOrigem --to $mailDestino --subject "Backup Dados" --text "$mail"
+#################################################################################################
 
-OBS. Verificar estratégia "incluir apenas"
-soma dos comandos --exclude "*"  --include"*.extesao"
+
 
 **********************************************
 
