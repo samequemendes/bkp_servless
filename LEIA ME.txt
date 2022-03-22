@@ -33,7 +33,7 @@ aws s3 sync c:/aws s3://treinamento.bkp
 
 ***Script top***
 
-atividades: 
+aatividades: 
 
 1 - alterar variaveis $origem - $destino - $mailOrigem - $mailDestino
 2 - salvar arquivo *.ps1
@@ -54,8 +54,36 @@ $mail = Get-Content -Path C:\device-less\log.txt
 aws ses send-email --from $mailOrigem --to $mailDestino --subject "Backup Dados" --text "$mail"
 #################################################################################################
 
+POLITICA PARA ACESSO BUCKET
+
+******************************************************************************************************************************************
+Com essa politica, o usuario pode apenas listar informacoes e colocar objetos no bucket especifico
+necessario alterar valores: <bucket_name> <user_sincronizacao>
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "VisualEditor0",
+            "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:ListBucket"
+            ],
+            "Resource": [
+                "arn:aws:s3:::<bucket_name>",
+                "arn:aws:s3:::*/*"
+            ],
+            "Condition": {
+                "ForAnyValue:StringEquals": {
+                    "aws:username": "<user_sincronizacao>"
+                }
+            }
+        }
+    ]
+}
 
 
-**********************************************
+*******************************************************************************************************************
 
 *
