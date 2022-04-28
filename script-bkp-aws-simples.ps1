@@ -1,0 +1,1 @@
+﻿aws s3 sync c:/aws s3://treinamento.bkp > /result.txt
